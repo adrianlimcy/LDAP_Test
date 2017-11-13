@@ -6,13 +6,14 @@ class User < ApplicationRecord
           :trackable, :validatable
 
   validates :username, presence: true, uniqueness: true
-  before_validation :get_ldap_email
-  def get_ldap_email
+  # before_validation :get_ldap_email
+  # def get_ldap_email
+  #  self.email = Devise::LDAP::Adapter.get_ldap_param(self.username,"mail").first
+  # end
+  #
+  # before_validation :ldap_before_save
+  def ldap_before_save
    self.email = Devise::LDAP::Adapter.get_ldap_param(self.username,"mail").first
-  end
-
-  before_validation :get_ldap_division
-  def get_ldap_division
    self.division = Devise::LDAP::Adapter.get_ldap_param(self.username,"division").first
   end
 
